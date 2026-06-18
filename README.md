@@ -83,4 +83,74 @@ This design demonstrates:
 * Scalability
 * Fault tolerance
 * Infrastructure as Code
+## Deployment Evidence
+
+### Live Website
+
+The Terraform configuration successfully deployed an Apache web server behind the Application Load Balancer.
+
+![Deployed AWS Website](images/deployed-website.png)
+
+### Auto Scaling Group
+
+The Auto Scaling Group maintained the required number of EC2 web servers across multiple Availability Zones.
+
+![Auto Scaling Group](images/auto%20scaling%20Running.png)
+
+### Load Balancer and Healthy Targets
+
+The Application Load Balancer distributed traffic to healthy EC2 targets.
+
+![Load Balancer Health](images/load%20balancer%20healthy.png)
+
+### Security Groups
+
+Security groups controlled network access between internet users, the Application Load Balancer, and the EC2 web servers.
+
+![Security Groups](images/security%20groups.png)
+
+### Service Health
+
+AWS service status and deployed-resource health were reviewed to confirm the environment was operating correctly.
+
+![Service Health](images/service%20health.png)
+
+## Terraform Workflow
+
+The following Terraform workflow was used:
+
+```bash
+terraform fmt
+terraform init
+terraform validate
+terraform plan
+terraform apply
+terraform output
+terraform destroy
+```
+
+### Command Purposes
+
+| Command              | Purpose                                         |
+| -------------------- | ----------------------------------------------- |
+| `terraform fmt`      | Formats Terraform configuration files           |
+| `terraform init`     | Initializes the project and downloads providers |
+| `terraform validate` | Checks whether the configuration is valid       |
+| `terraform plan`     | Previews the resources Terraform will create    |
+| `terraform apply`    | Deploys the AWS infrastructure                  |
+| `terraform output`   | Displays important deployment information       |
+| `terraform destroy`  | Removes the deployed resources to control costs |
+
+## Security Controls
+
+The project included the following security practices:
+
+* AWS root credentials were not stored in the repository
+* AWS CLI browser authentication was used instead of embedding access keys
+* Terraform state files were excluded through `.gitignore`
+* The EC2 security group accepted HTTP traffic only from the load balancer security group
+* The load balancer accepted public HTTP traffic on port 80
+* SSH access was not opened to the internet
+* Project resources were tagged for identification and cleanup
+* Resources were destroyed after testing to prevent unnecessary charges
 
